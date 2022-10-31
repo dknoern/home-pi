@@ -1,0 +1,16 @@
+---
+- name: Install AWS CLI.
+  package: name={{ item }} state=present
+  with_items:
+    - awscli
+
+- name: Configure AWS CLI.
+  shell: aws configure set {{ item.key }} {{ item.value }} --profile {{ aws_profile }}
+  #no_log: True
+  with_dict:
+    aws_access_key_id: "{{ aws_access_key }}"
+    aws_secret_access_key: "{{ aws_secret_key }}"
+    region: "{{ aws_region }}"
+    format: "{{ aws_format }}"
+  become_user: "{{ aws_system_user }}"
+  changed_when: false

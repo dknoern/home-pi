@@ -9,6 +9,7 @@ Takes a fresh pi and installs:
 * Pi-Hole add blocker
 * Plex server
 * Neofetch
+* Tailscale
 * AWS client for backing up to s3
 
 This repo began as a fork of the excellent [Internet Pi](https://github.com/geerlingguy/internet-pi) project provided by [Jeff Geerling](https://github.com/geerlingguy).
@@ -90,6 +91,19 @@ prometheus_node_exporter_targets:
   # Add more targets here
   - 'another-server.local:9100'
 ```
+
+### Tailscale
+
+After running ansible, tailscale will be installed.  To authenticate, manually login to the PI and type:
+
+```
+sudo tailscale up
+```
+
+You will be prompted to add the node to your tailscale machines.
+
+TODO: automate this step.
+
 
 ## Updating
 

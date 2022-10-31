@@ -45,3 +45,11 @@
     - name: Set up Plex Monitoring.
       ansible.builtin.import_tasks: tasks/plex.yml
       when: plex_enable
+
+    - name: Set up tailscale.
+      ansible.builtin.import_tasks: tasks/tailscale.yml
+      when: tailscale_enable
+
+    - name: Set up AWS cli.
+      ansible.builtin.import_tasks: tasks/aws-cli.yml
+      when: aws_cli_enable

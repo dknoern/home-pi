@@ -1,0 +1,32 @@
+---
+- name: Check if tailscale is already present.
+  ansible.builtin.command: which tailscale
+  failed_when: false
+  changed_when: false
+  check_mode: false
+  register: tailscale_command_result
+
+- name: Download signing key.
+  ansible.builtin.get_url:
+    url: https://pkgs.tailscale.com/stable/raspbian/buster.gpg
+    dest: /tmp/buster.gpg
+  when: tailscale_command_result.rc == 1
+
+- name: Install key.
+  ansible.builtin.command: sudo apt-key add /tmp/buster.gpg
+  when: tailscale_command_result.rc == 1
+
+- name: Download repo.
+  ansible.builtin.get_url:
+    url: https://pkgs.tailscale.com/stable/raspbian/buster.list
+    dest: /etc/apt/sources.list.d/tailscale.list
+  when: tailscale_command_result.rc == 1
+
+
+- name: Ensure dependencies and tailscale are installed (Debian).
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - tailscale
+    state: present
+  when: ansible_facts.os_family == "Debian"

@@ -58,3 +58,15 @@ plex_media_volumes:  # [host]:[container]
   - /media/terabyte/videos:/HomeMovies
   - /media/terabyte/workout:/Workout
   - /media/terabyte/config:/config
+
+# Tailscale configuration
+tailscale_enable: true
+
+# AWS CLI configuration
+aws_profile: default
+aws_cli_enable: true
+aws_access_key: ### AWS ACCESS KEY HERE ###
+aws_secret_key: ### AWS SECRET KEY HERE ###
+aws_region: us-west-2
+aws_format: json
+aws_system_user: pi
