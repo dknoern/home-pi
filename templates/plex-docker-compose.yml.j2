@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+---
+version: "3.5"
+services:
+  plex:
+    image: linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - PLEX_CLAIM= #optional
+    volumes:
+{{ plex_media_volumes | to_nice_yaml() | indent(6, True) }}
+    restart: unless-stopped
