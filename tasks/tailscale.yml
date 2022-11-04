@@ -23,10 +23,9 @@
   when: tailscale_command_result.rc == 1
 
 
-- name: Ensure dependencies and tailscale are installed (Debian).
+- name: Ensure dependencies and tailscale are installed.
   ansible.builtin.apt:
     name:
       - apt-transport-https
       - tailscale
     state: present
-  when: ansible_facts.os_family == "Debian"

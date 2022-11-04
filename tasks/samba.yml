@@ -1,0 +1,31 @@
+---
+- name: Ensure samba is installed.
+  ansible.builtin.apt:
+    name:
+      - samba
+      - samba-common-bin
+    state: present
+
+- name: samba config
+  blockinfile:
+    path: /etc/samba/smb.conf
+    block: |
+      [terabyte]
+      path = /media/terabyte
+      read only = no
+      public = yes
+      writable = yes
+      create mask=0644
+      directory mark=0755
+      force user = pi
+      [pi]
+      path = /home/pi
+      read only = no
+      public = yes
+      writable = yes
+      create mask=0644
+      directory mark=0755
+      force user = pi
+  notify:
+    - restart samba
+  tags: [ samba ]
