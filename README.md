@@ -6,7 +6,7 @@ This repo captures all my home server and home lab settings as infrastructure-as
 
 Takes a fresh pi and installs:
 * Internet monitoring via grafana and prometheus
-* Pi-Hole add blocker
+* Pi-Hole ad blocker
 * Plex server
 * Neofetch
 * Tailscale
