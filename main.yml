@@ -40,7 +40,7 @@
 
     - name: Set up tailscale.
       ansible.builtin.import_tasks: tasks/tailscale.yml
-      when: tailscale_enable
+   #   when: tailscale_enable
 
     - name: Set up AWS cli.
       ansible.builtin.import_tasks: tasks/aws-cli.yml

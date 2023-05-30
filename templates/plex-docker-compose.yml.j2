@@ -83,7 +83,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Los_Angeles
       - WEBUI_PORT=8080
     volumes:
       - /media/terabyte/qbtorrent/config:/config
@@ -94,18 +94,30 @@ services:
       - 6881:6881/udp
     restart: unless-stopped
 
-  jackett:
-    image: lscr.io/linuxserver/jackett:latest
-    container_name: jackett
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
-      - AUTO_UPDATE=true #optional
-      #- RUN_OPTS=<run options here> #optional
+      - TZ=America/Los_Angeles
     volumes:
-      - /media/terabyte/jackett/config:/config
-      #- /media/terabyte/jacket/downloads:/downloads  # is this needed?
+      - /media/terabyte/lidarr/config:/config
+      - /media/terabyte/music:/music
+      - /media/terabyte/downloads:/downloads
     ports:
-      - 9117:9117
+      - 8686:8686
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - /media/terabyte/prowlarr/config:/config
+    ports:
+      - 9696:9696
     restart: unless-stopped
