@@ -1,0 +1,20 @@
+---
+- name: Create Arr suite folder on Pi.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/arr"
+    state: directory
+    mode: 0755
+  become: false
+
+- name: Copy arr suite docker-compose template to Pi.
+  ansible.builtin.template:
+    src: templates/arr-docker-compose.yml.j2
+    dest: "{{ config_dir }}/arr/docker-compose.yml"
+    mode: '0640'
+  become: false
+  notify: Restart arr
+
+- name: Ensure Arr suite is running.
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "/home/{{ ansible_user }}/arr"

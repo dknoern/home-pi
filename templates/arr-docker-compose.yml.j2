@@ -1,0 +1,101 @@
+# {{ ansible_managed }}
+---
+version: "3.5"
+services:
+
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=America/Los_Angeles
+    ports:
+      - 5055:5055
+    volumes:
+      - /media/terabyte/overseerr:/app/config
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - /media/terabyte/sonarr:/config
+      - /media/terabyte/tv:/tv #optional
+      - /media/terabyte/downloads:/downloads #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - /media/terabyte/radarr:/config
+      - /media/terabyte/movies:/movies #optional
+      - /media/terabyte/downloads:/downloads #optional
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+      - WEBUI_PORT=8080
+    volumes:
+      - /media/terabyte/qbtorrent/config:/config
+      - /media/terabyte/downloads:/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - /media/terabyte/lidarr/config:/config
+      - /media/terabyte/music:/music
+      - /media/terabyte/downloads:/downloads
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - /media/terabyte/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /media/terabyte/homarr/configs:/app/data/configs
+      - /media/terabyte/homarr/icons:/app/public/icons
+    ports:
+      - '7575:7575'

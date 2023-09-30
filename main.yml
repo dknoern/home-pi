@@ -1,5 +1,5 @@
 ---
-- hosts: internet_pi
+- hosts: homelab
   become: true
 
   pre_tasks:
@@ -34,9 +34,13 @@
       ansible.builtin.import_tasks: tasks/pi-hole.yml
       when: pihole_enable
 
-    - name: Set up Plex Monitoring.
+    - name: Set up Plex.
       ansible.builtin.import_tasks: tasks/plex.yml
       when: plex_enable
+
+    - name: Set up Arr Suite.
+      ansible.builtin.import_tasks: tasks/arr.yml
+      when: arr_enable
 
     - name: Set up tailscale.
       ansible.builtin.import_tasks: tasks/tailscale.yml

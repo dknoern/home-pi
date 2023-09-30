@@ -14,11 +14,17 @@
   become: false
 
 - name: Restart plex
-  community.docker.docker_compose:
-    project_src: "{{ config_dir }}/plex/"
-    build: false
-    restarted: true
-  become: false
+  ansible.builtin.command:
+    cmd: docker compose down && docker compose up -d
+    chdir: "/home/{{ ansible_user }}/plex"
+
+- name: Restart arr
+  ansible.builtin.command:
+    cmd: docker compose down
+    chdir: "/home/{{ ansible_user }}/arr"
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "/home/{{ ansible_user }}/arr"
 
 - name: restart samba
   command: service smbd restart

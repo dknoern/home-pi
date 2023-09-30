@@ -17,7 +17,7 @@
 # TODO: The first time this playbook is run, the `pi` user may not be added
 # to the `docker` group, so this task may fail.
 - name: Ensure Plex is running.
-  community.docker.docker_compose:
-    project_src: "{{ config_dir }}/plex/"
-    build: false
-  become: false
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "/home/{{ ansible_user }}/plex"
+

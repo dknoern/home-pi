@@ -1,5 +1,5 @@
 ---
-- hosts: internet_pi
+- hosts: homelab
   become: true
 
   pre_tasks:
