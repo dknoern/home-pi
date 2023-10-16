@@ -17,15 +17,7 @@
       writable = yes
       create mask=0644
       directory mark=0755
-      force user = pi
-      [pi]
-      path = /home/pi
-      read only = no
-      public = yes
-      writable = yes
-      create mask=0644
-      directory mark=0755
-      force user = pi
+      force user = dknoern
   notify:
     - restart samba
   tags: [ samba ]
